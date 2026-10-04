@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Para Beti ❤️</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <!-- Overlay para iniciar la música (requerido por navegadores) -->
+  <div id="start-overlay" class="overlay">
+    <div class="start-btn">Toca para tu sorpresa 🌸</div>
+  </div>
+
+  <!-- Audio de fondo -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="assets/song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ============================================
+       LAYER 1 — Background (Canvas de pétalos)
+       ============================================ -->
+  <canvas id="bg-canvas" class="canvas-layer"></canvas>
+
+  <!-- ============================================
+       LAYER 2 — Main scene
+       ============================================ -->
+  <div class="scene">
+    <!-- Heart section -->
+    <div class="heart-section">
+      <canvas id="heart-canvas"></canvas>
+      <div class="love-text">Te quiero<br />mucho gritona</div>
+    </div>
+
+    <!-- Glassmorphism message card -->
+    <div class="glass-card">
+      <p class="message-text" id="typewriter"><span class="tw-cursor"></span></p>
+      <p class="signature">— Con todo mi amor 💗</p>
+    </div>
+  </div>
+
+  <!-- ============================================
+       LAYER 3 — Foreground effects
+       ============================================ -->
+  <canvas id="fx-canvas" class="canvas-layer"></canvas>
+
+  <!-- Scripts -->
+  <script src="js/background.js"></script>
+  <script src="js/heart.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/typewriter.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

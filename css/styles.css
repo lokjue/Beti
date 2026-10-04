@@ -1,0 +1,229 @@
+/* ============================================================
+   BETI  —  Master Stylesheet (Light Pastel Theme)
+   ============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* CSS Variables for theme */
+:root {
+  --primary-pink: #d81b60;      /* Neon pink */
+  --secondary-pink: #c2185b;    /* Dark rose */
+  --glass-bg: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.8);
+  --bg-color: #fdf5f8;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  /* Fondo con el GIF */
+  background: #fdf5f8 url('../assets/bg.gif') center/cover no-repeat;
+  color: #4a154b;
+}
+
+/* Capa semitransparente blanca para asegurar que el texto sea legible */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.4), rgba(255,255,255,0.1)), repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================
+   Pantalla de inicio (Overlay)
+   ============================================================ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.start-btn {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 0 8px 25px rgba(255, 117, 140, 0.4);
+  cursor: pointer;
+  animation: pulse-btn 2s infinite;
+}
+
+@keyframes pulse-btn {
+  0% { transform: scale(1); box-shadow: 0 8px 25px rgba(255, 117, 140, 0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 12px 35px rgba(255, 117, 140, 0.6); }
+  100% { transform: scale(1); box-shadow: 0 8px 25px rgba(255, 117, 140, 0.4); }
+}
+
+/* ============================================================
+   Canvas layers
+   ============================================================ */
+.canvas-layer {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+}
+#bg-canvas  { z-index: 1; }
+#fx-canvas  { z-index: 5; pointer-events: all; }
+
+/* ============================================================
+   Scene  —  Flexbox centered layout
+   ============================================================ */
+.scene {
+  position: relative;
+  z-index: 3;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px;
+  pointer-events: none;
+  opacity: 0; /* Controlado por main.js al tocar */
+}
+
+.scene.active {
+  animation: scene-enter 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes scene-enter {
+  0%   { opacity: 0; transform: scale(0.9) translateY(30px); filter: blur(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+/* ============================================================
+   Heart section
+   ============================================================ */
+.heart-section {
+  position: relative;
+  width:  min(520px, 95vw);
+  height: min(480px, 50vh);
+  display: flex; align-items: center; justify-content: center;
+}
+
+#heart-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+}
+
+/* ============================================================
+   Central love text
+   ============================================================ */
+.love-text {
+  position: absolute;
+  z-index: 2;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 5vw, 2.8rem);
+  text-align: center; line-height: 1.3;
+  color: #c2185b; /* Rosa oscuro cereza */
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.9),
+    0 2px 4px rgba(194, 24, 91, 0.3);
+  opacity: 0;
+}
+
+.scene.active .love-text {
+  animation:
+    text-reveal 1.4s ease-out 1.5s forwards,
+    heartbeat  1.3s ease-in-out 3s infinite;
+}
+
+@keyframes text-reveal {
+  0%   { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  14%  { transform: scale(1.15); }
+  28%  { transform: scale(0.98); }
+  42%  { transform: scale(1.1); }
+  56%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================================
+   Glassmorphism card (Light Theme)
+   ============================================================ */
+.glass-card {
+  max-width: 580px;
+  width: 90%;
+  padding: 24px 30px;
+  border-radius: 24px;
+  /* Cristal translúcido */
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  /* subtle neon glow */
+  box-shadow: 0 15px 35px rgba(var(--primary-pink), 0.15), inset 0 0 12px rgba(var(--primary-pink), 0.2);
+  text-align: center;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scene.active .glass-card {
+  animation: card-enter 1.5s cubic-bezier(0.22, 1, 0.36, 1) 2s forwards;
+}
+
+@keyframes card-enter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.9rem, 3.5vw, 1.15rem);
+  line-height: 1.7;
+  color: #4a154b; /* Texto oscuro */
+  min-height: 4em;
+}
+
+.message-text .char { opacity: 0; display: inline; transition: opacity 0.08s ease; }
+.message-text .char.visible { opacity: 1; }
+.message-text .char.highlight { color: #d81b60; font-weight: 600; }
+
+.tw-cursor {
+  display: inline-block; width: 2px; height: 1.15em;
+  background: #d81b60; margin-left: 3px; vertical-align: text-bottom;
+  animation: cursor-blink 0.7s step-end infinite;
+}
+@keyframes cursor-blink { 50% { opacity: 0; } }
+
+.signature {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  color: #c2185b;
+  margin-top: 15px; opacity: 0;
+}
+.scene.active .signature {
+  animation: sig-fade 2s ease-out 7.5s forwards;
+}
+@keyframes sig-fade { to { opacity: 1; } }
+
+/* ============================================================
+   Mobile Adjustments
+   ============================================================ */
+@media (max-width: 480px) {
+  .heart-section { height: 42vh; }
+  .glass-card { padding: 18px 20px; border-radius: 20px; }
+  .scene { gap: 10px; }
+}
+@media (max-height: 700px) {
+  .heart-section { height: 40vh; }
+}
